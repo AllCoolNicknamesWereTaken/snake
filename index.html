@@ -1,12 +1,57 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pl">
   <head>
     <meta charset='utf-8'>
     <style>
+      .square{
+        width: 15px;
+        height: 15px;
+        border: 1px black solid;
+        float: left;
+        position: absolute;
+
+      }
+
+      .BoardClass {
+        border: solid black 5px;
+        width: 375px;
+        height: 375px;
+        float: left;
+        position: absolute;
+      }
+      .active {
+        background: blue;
+      }
     </style>
   </head>
   <body>
     <script>
+      var body = document.body;
+      var board = document.createElement('div');
+      body.appendChild(board);
+      board.className = 'BoardClass';
+      board.style.top = 0 +'px';
+      board.style.left = 0 + 'px';
+
+      function CreateBoard(x, y) {
+        for(var j = 0; j < y; j++) {
+          for(var i = 0; i < x; i++) {
+            var square = document.createElement('div');
+            square.className = 'square';
+            body.appendChild(square);
+            square.style.left = 4 + (15 * i) + 'px';
+            square.style.top = 4 + (15 * j) + 'px';
+            square.dataset.x = i;
+            square.dataset.y = j;
+            square.dataset.status = 0;
+          //  square.addEventListener("click", function(event) {
+            //  event.target.classList.toggle('active');
+              //console.log(AmountOfNeighbors(event.target));
+            //});
+          }
+        }
+      }
+      CreateBoard(25,25);
     </script>
   </body>
 </html>
