@@ -97,25 +97,6 @@
           run();
         }
 
-        function right (){
-          x = snakex[parseInt(snakex.length) - 1] + 1;
-          y = snakey[parseInt(snakey.length) - 1];
-          selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
-          snakex.push(x);
-          snakey.push(y);
-          selector.classList.add('active');
-          run();
-        }
-
-        function left (){
-          x = snakex[parseInt(snakex.length) - 1] - 1;
-          y = snakey[parseInt(snakey.length) - 1];
-          selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
-          snakex.push(x);
-          snakey.push(y);
-          selector.classList.add('active');
-          run();
-        }
 
         const when_button_is_pressed = function(e) {
           let x = 0;
