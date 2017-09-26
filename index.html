@@ -78,14 +78,43 @@
             }
         function down () {
           x = snakex[parseInt(snakex.length) - 1];
-            y = snakey[parseInt(snakey.length) - 1] + 1;
-            selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
-            snakex.push(x);
-            snakey.push(y);
-            selector.classList.add('active');
-            run();
+          y = snakey[parseInt(snakey.length) - 1] + 1;
+          selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
+          snakex.push(x);
+          snakey.push(y);
+          selector.classList.add('active');
+          run();
         }
 
+        function up (){
+          x = snakex[snakex.length - 1];
+          y = snakey[parseInt(snakey.length) - 1] - 1;
+          selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
+          snakex.push(x);
+          snakey.push(y);
+          selector.classList.add('active');
+          run();
+        }
+
+        function right (){
+          x = snakex[parseInt(snakex.length) - 1] + 1;
+          y = snakey[parseInt(snakey.length) - 1];
+          selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
+          snakex.push(x);
+          snakey.push(y);
+          selector.classList.add('active');
+          run();
+        }
+
+        function left (){
+          x = snakex[parseInt(snakex.length) - 1] - 1;
+          y = snakey[parseInt(snakey.length) - 1];
+          selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
+          snakex.push(x);
+          snakey.push(y);
+          selector.classList.add('active');
+          run();
+        }
         const when_button_is_pressed = function(e) {
           let x = 0;
           let y = 0;
@@ -94,25 +123,21 @@
           console.log(e.key);
           switch(e.key) {
             case 'ArrowDown':
+              clearInterval(Interval);
               Interval = setInterval( down , 300);
-              // x = snakex[parseInt(snakex.length) - 1];
-              // y = snakey[parseInt(snakey.length) - 1] + 1;
-              // selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
-              // snakex.push(x);
-              // snakey.push(y);
-              // selector.classList.add('active');
-              // run();
-            console.log('dupa');
-              y = 5;
+              console.log('dupa');
               break;
             case 'ArrowUp':
-              y = -5;
+              clearInterval(Interval);
+              Interval = setInterval( up , 300);
               break;
             case 'ArrowLeft':
-              x = -5;
+                clearInterval(Interval);
+            Interval = setInterval( left , 300);
               break;
             case 'ArrowRight':
-              x = 5;
+              clearInterval(Interval);
+              Interval = setInterval( right , 300);
               break;
             }
           }
