@@ -6,7 +6,7 @@
       .square{
         width: 15px;
         height: 15px;
-        //border: 1px black solid;
+        //border: 1px black solid;*/
         float: left;
         position: absolute;
 
@@ -86,9 +86,10 @@
           run();
         }
 
-        function up (){
-          x = snakex[snakex.length - 1];
-          y = snakey[parseInt(snakey.length) - 1] - 1;
+        function Move (dx, dy){
+          console.log(dx + ' ' + dy);
+          x = snakex[snakex.length - 1] + dx;
+          y = snakey[snakey.length - 1] + dy;
           selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
           snakex.push(x);
           snakey.push(y);
@@ -115,6 +116,7 @@
           selector.classList.add('active');
           run();
         }
+
         const when_button_is_pressed = function(e) {
           let x = 0;
           let y = 0;
@@ -124,20 +126,20 @@
           switch(e.key) {
             case 'ArrowDown':
               clearInterval(Interval);
-              Interval = setInterval( down , 300);
+              Interval = setInterval(function(){Move(0, 1)}, 300);
               console.log('dupa');
               break;
             case 'ArrowUp':
               clearInterval(Interval);
-              Interval = setInterval( up , 300);
+              Interval = setInterval( function(){Move(0, -1)} , 300);
               break;
             case 'ArrowLeft':
-                clearInterval(Interval);
-            Interval = setInterval( left , 300);
+              clearInterval(Interval);
+            Interval = setInterval(function(){Move(-1, 0)} , 300);
               break;
             case 'ArrowRight':
               clearInterval(Interval);
-              Interval = setInterval( right , 300);
+              Interval = setInterval(function(){Move(1, 0)}, 300);
               break;
             }
           }
