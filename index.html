@@ -6,7 +6,7 @@
       .square{
         width: 15px;
         height: 15px;
-        border: 1px black solid;
+        //border: 1px black solid;
         float: left;
         position: absolute;
 
@@ -32,6 +32,10 @@
     <script>
       var body = document.body;
       var board = document.createElement('div');
+      var snakex = []
+      var snakey = []
+      var selector = 0;
+      var Interval = 0;
       body.appendChild(board);
       board.className = 'BoardClass';
       board.style.top = 0 +'px';
@@ -54,22 +58,72 @@
 
 
       function CreateSnake () {
-        let selector = 0;
         let x = 5;
         let y = 5;
           for( let i = 0; i < 3; i++) {
             selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
             selector.classList.add('active');
+            snakey.push(y);
+            snakex.push(x);
             x++;
           }
-
       }
+      function run () {
 
+          selector = document.querySelector('[data-x="'+ snakex[0] +'"][data-y="'+ snakey[0] +'"]');
+          selector.classList.toggle('active');
+          snakex.splice(0, 1);
+          snakey.splice(0, 1);
+
+            }
+        function down () {
+          x = snakex[parseInt(snakex.length) - 1];
+            y = snakey[parseInt(snakey.length) - 1] + 1;
+            selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
+            snakex.push(x);
+            snakey.push(y);
+            selector.classList.add('active');
+            run();
+        }
+
+        const when_button_is_pressed = function(e) {
+          let x = 0;
+          let y = 0;
+
+
+          console.log(e.key);
+          switch(e.key) {
+            case 'ArrowDown':
+              Interval = setInterval( down , 300);
+              // x = snakex[parseInt(snakex.length) - 1];
+              // y = snakey[parseInt(snakey.length) - 1] + 1;
+              // selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
+              // snakex.push(x);
+              // snakey.push(y);
+              // selector.classList.add('active');
+              // run();
+            console.log('dupa');
+              y = 5;
+              break;
+            case 'ArrowUp':
+              y = -5;
+              break;
+            case 'ArrowLeft':
+              x = -5;
+              break;
+            case 'ArrowRight':
+              x = 5;
+              break;
+            }
+          }
 
 
 
       CreateBoard(25,25);
-      run();
+      CreateSnake();
+      //run();
+
+      document.addEventListener('keydown', when_button_is_pressed);
     </script>
   </body>
 </html>
