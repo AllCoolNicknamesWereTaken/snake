@@ -19,9 +19,6 @@
         float: left;
         position: absolute;
       }
-      .active {
-        background: blue;
-      }
 
       .active {
         background: black;
@@ -36,6 +33,8 @@
       var snakey = []
       var selector = 0;
       var Interval = 0;
+      var directionx = 1;
+      var directiony = 0;
       body.appendChild(board);
       board.className = 'BoardClass';
       board.style.top = 0 +'px';
@@ -69,25 +68,14 @@
           }
       }
       function run () {
-
           selector = document.querySelector('[data-x="'+ snakex[0] +'"][data-y="'+ snakey[0] +'"]');
           selector.classList.toggle('active');
           snakex.splice(0, 1);
           snakey.splice(0, 1);
+      }
 
-            }
-        function down () {
-          x = snakex[parseInt(snakex.length) - 1];
-          y = snakey[parseInt(snakey.length) - 1] + 1;
-          selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
-          snakex.push(x);
-          snakey.push(y);
-          selector.classList.add('active');
-          run();
-        }
 
-        function Move (dx, dy){
-          console.log(dx + ' ' + dy);
+        function Move (dx, dy) {
           x = snakex[snakex.length - 1] + dx;
           y = snakey[snakey.length - 1] + dy;
           selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
@@ -106,32 +94,28 @@
           console.log(e.key);
           switch(e.key) {
             case 'ArrowDown':
-              clearInterval(Interval);
-              Interval = setInterval(function(){Move(0, 1)}, 300);
-              console.log('dupa');
+              directionx = 0;
+              directiony = 1;
               break;
             case 'ArrowUp':
-              clearInterval(Interval);
-              Interval = setInterval( function(){Move(0, -1)} , 300);
+              directionx = 0;
+              directiony = -1;
               break;
             case 'ArrowLeft':
-              clearInterval(Interval);
-            Interval = setInterval(function(){Move(-1, 0)} , 300);
+              directionx = -1;
+              directiony = 0;
               break;
             case 'ArrowRight':
-              clearInterval(Interval);
-              Interval = setInterval(function(){Move(1, 0)}, 300);
+              directionx = 1;
+              directiony = 0;
               break;
             }
           }
 
-
-
       CreateBoard(25,25);
       CreateSnake();
-      //run();
-
       document.addEventListener('keydown', when_button_is_pressed);
+      Interval = setInterval(function(){Move(directionx, directiony)}, 300)
     </script>
   </body>
 </html>
