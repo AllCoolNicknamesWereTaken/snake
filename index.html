@@ -89,6 +89,7 @@
           selector.classList.add('active');
           run();
           if(snakex[snakex.length - 1] == activeFood.x && snakey[snakey.length - 1] == activeFood.y) {
+            activeFood.Eat();
             activeFood = new food();
           }
 
@@ -134,6 +135,10 @@
           }
           foodSelector = document.querySelector('[data-x="'+ this.x +'"][data-y="'+ this.y +'"]')
           foodSelector.classList.add('food');
+
+          this.Eat = function () {
+            document.querySelector('[data-x="'+ this.x +'"][data-y="'+ this.y +'"]').classList.remove('food');
+          }
         }
 
 
