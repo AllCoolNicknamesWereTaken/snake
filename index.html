@@ -83,6 +83,7 @@
           snakey.push(y);
           selector.classList.add('active');
           run();
+
         }
 
 
@@ -111,6 +112,15 @@
               break;
             }
           }
+          function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+          }
+        function food(){
+          this.x = getRandomInt(0, 25);
+          this.y = getRandomInt(0, 25);
+        }
 
       CreateBoard(25,25);
       CreateSnake();
