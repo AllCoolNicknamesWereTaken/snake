@@ -87,12 +87,14 @@
           snakex.push(x);
           snakey.push(y);
           selector.classList.add('active');
-          run();
+
           if(snakex[snakex.length - 1] == activeFood.x && snakey[snakey.length - 1] == activeFood.y) {
             activeFood.Eat();
             activeFood = new food();
           }
-
+          else{
+            run();
+          }
         }
 
 
