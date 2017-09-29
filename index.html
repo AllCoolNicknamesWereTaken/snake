@@ -106,20 +106,28 @@
           console.log(e.key);
           switch(e.key) {
             case 'ArrowDown':
-              directionx = 0;
-              directiony = 1;
+              if(directionx != 0 && directiony != -1) {
+                directionx = 0;
+                directiony = 1;
+              }
               break;
             case 'ArrowUp':
-              directionx = 0;
-              directiony = -1;
+              if(directionx != 0 && directiony != 1) {
+                directionx = 0;
+                directiony = -1;
+              }
               break;
             case 'ArrowLeft':
-              directionx = -1;
-              directiony = 0;
+              if(directionx != 1 && directiony != 0) {
+                directionx = -1;
+                directiony = 0;
+              }
               break;
             case 'ArrowRight':
-              directionx = 1;
-              directiony = 0;
+              if(directionx != -1 && directiony != 0) {
+                directionx = 1;
+                directiony = 0;
+              }
               break;
             }
           }
