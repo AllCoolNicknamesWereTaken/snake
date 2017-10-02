@@ -27,6 +27,12 @@
       .food {
         background: red;
       }
+
+      h1 {
+        position: absolute;
+        font-weight: bold;
+        font: 20pt Arial;
+      }
     </style>
   </head>
   <body>
@@ -84,6 +90,15 @@
           let x = snakex[snakex.length - 1] + dx;
           let y = snakey[snakey.length - 1] + dy;
           selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
+          if(selector == null)
+          {
+            var GameOver =  document.createElement('h1');
+            body.appendChild(GameOver);
+            GameOver.style.top = 100 +'px';
+            GameOver.style.left = 100 + 'px';
+            GameOver.innerHTML = 'Game Over';
+
+          }
           snakex.push(x);
           snakey.push(y);
           selector.classList.add('active');
