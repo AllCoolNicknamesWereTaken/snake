@@ -1,177 +1,196 @@
 <!DOCTYPE html>
-<html lang="pl">
-  <head>
-    <meta charset='utf-8'>
-    <style>
-      .square{
-        width: 15px;
-        height: 15px;
-        //border: 1px black solid;*/
-        float: left;
-        position: absolute;
+ <html lang="pl">
+   <head>
+     <meta charset='utf-8'>
+     <style>
+       .square{
+         width: 15px;
+         height: 15px;
+         //border: 1px black solid;*/
+         float: left;
+         position: absolute;
 
-      }
+       }
 
-      .BoardClass {
-        border: solid black 5px;
-        width: 375px;
-        height: 375px;
-        float: left;
-        position: absolute;
-      }
+       .BoardClass {
+         border: solid black 5px;
+         width: 375px;
+         height: 375px;
+         float: left;
+         position: absolute;
+       }
 
-      .active {
-        background: black;
-      }
+       .active {
+         background: black;
+       }
 
-      .food {
-        background: red;
-      }
+       .food {
+         background: red;
+       }
 
       h1 {
         position: absolute;
         font-weight: bold;
         font: 20pt Arial;
       }
-    </style>
-  </head>
-  <body>
-    <script>
-      var body = document.body;
-      var board = document.createElement('div');
-      var snakex = []
-      var snakey = []
-      var selector = 0;
-      var Interval = 0;
-      var directionx = 1;
-      var directiony = 0;
-      var foodSelector = 0;
-      body.appendChild(board);
-      board.className = 'BoardClass';
-      board.style.top = 0 +'px';
-      board.style.left = 0 + 'px';
+     </style>
+   </head>
+   <body>
+     <script>
+       var body = document.body;
+       var board = document.createElement('div');
+       var snakex = []
+       var snakey = []
+       var SnakePosition = [];
 
-      function CreateBoard(x, y) {
-        for(var j = 0; j < y; j++) {
-          for(var i = 0; i < x; i++) {
-            var square = document.createElement('div');
-            square.className = 'square';
-            body.appendChild(square);
-            square.style.left = 4 + (15 * i) + 'px';
-            square.style.top = 4 + (15 * j) + 'px';
-            square.dataset.x = i;
-            square.dataset.y = j;
-            square.dataset.status = 0;
-          }
-        }
-      }
+       function Punkt(x, y)
+       {
+         this.x = x;
+         this.y = y;
+       }
+       var selector = 0;
+       var Interval = 0;
+       var directionx = 1;
+       var directiony = 0;
+       var foodSelector = 0;
+       body.appendChild(board);
+       board.className = 'BoardClass';
+       board.style.top = 0 +'px';
+       board.style.left = 0 + 'px';
 
-
-      function CreateSnake () {
-        let x = 5;
-        let y = 5;
-          for( let i = 0; i < 3; i++) {
-            selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
-            selector.classList.add('active');
-            snakey.push(y);
-            snakex.push(x);
-            x++;
-          }
-      }
-      function run () {
-          selector = document.querySelector('[data-x="'+ snakex[0] +'"][data-y="'+ snakey[0] +'"]');
-          selector.classList.toggle('active');
-          snakex.splice(0, 1);
-          snakey.splice(0, 1);
-      }
+       function CreateBoard(x, y) {
+         for(var j = 0; j < y; j++) {
+           for(var i = 0; i < x; i++) {
+             var square = document.createElement('div');
+             square.className = 'square';
+             body.appendChild(square);
+             square.style.left = 4 + (15 * i) + 'px';
+             square.style.top = 4 + (15 * j) + 'px';
+             square.dataset.x = i;
+             square.dataset.y = j;
+             square.dataset.status = 0;
+           }
+         }
+       }
 
 
-        function Move (dx, dy) {
-          let x = snakex[snakex.length - 1] + dx;
-          let y = snakey[snakey.length - 1] + dy;
-          selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
+       function CreateSnake () {
+         let x = 5;
+         let y = 5;
+           for( let i = 0; i < 3; i++) {
+             selector = document.querySelector('[data-x="'+ x +'"][data-y="'+ y +'"]');
+             selector.classList.add('active');
+             //snakey.push(y);
+             //snakex.push(x);
+             var p = new Punkt(x,y);
+             console.log(p.x +' '+ p.y)
+             SnakePosition.push(p);
+             for( let i = 0; i < SnakePosition.length; i++) {
+               console.log(SnakePosition[i].x);
+               console.log(SnakePosition[SnakePosition.length - 1].x);
+             }
+
+             x++;
+           }
+       }
+       function run () {
+           selector = document.querySelector('[data-x="'+ SnakePosition[0].x +'"][data-y="'+ SnakePosition[0].y +'"]');
+           selector.classList.toggle('active');
+           SnakePosition.splice(0, 1);
+       }
+
+
+         function Move (dx, dy) {
+           let px = SnakePosition[SnakePosition.length - 1].x + dx;
+           let py = SnakePosition[SnakePosition.length - 1].y + dy;
+           selector = document.querySelector('[data-x="'+ px +'"][data-y="'+ py +'"]');
           if(selector == null)
           {
             var GameOver =  document.createElement('h1');
+            clearInterval(Interval);
             body.appendChild(GameOver);
             GameOver.style.top = 100 +'px';
             GameOver.style.left = 100 + 'px';
             GameOver.innerHTML = 'Game Over';
 
           }
-          snakex.push(x);
-          snakey.push(y);
-          selector.classList.add('active');
+           //snakex.push(x);
+           //snakey.push(y);
+           var p = new Punkt(px ,py);
+           SnakePosition.push(p);
+           console.log(p.x +' '+ p.y);
 
-          if(snakex[snakex.length - 1] == activeFood.x && snakey[snakey.length - 1] == activeFood.y) {
-            activeFood.Eat();
-            activeFood = new food();
-          }
-          else{
-            run();
-          }
-        }
+           selector.classList.add('active');
 
-
-        const when_button_is_pressed = function(e) {
-          let x = 0;
-          let y = 0;
-
-
-          console.log(e.key);
-          switch(e.key) {
-            case 'ArrowDown':
-              if(directionx != 0 && directiony != -1) {
-                directionx = 0;
-                directiony = 1;
-              }
-              break;
-            case 'ArrowUp':
-              if(directionx != 0 && directiony != 1) {
-                directionx = 0;
-                directiony = -1;
-              }
-              break;
-            case 'ArrowLeft':
-              if(directionx != 1 && directiony != 0) {
-                directionx = -1;
-                directiony = 0;
-              }
-              break;
-            case 'ArrowRight':
-              if(directionx != -1 && directiony != 0) {
-                directionx = 1;
-                directiony = 0;
-              }
-              break;
-            }
-          }
-          function getRandomInt(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-            return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-          }
-        function food(){
-          this.x = getRandomInt(0, 25);
-          this.y = getRandomInt(0, 25);
-          while (snakex.indexOf(this.x) != -1 && snakey.indexOf(this.y) != -1) {
-            this.x = getRandomInt(0, 25);
-            this.y = getRandomInt(0, 25);
-          }
-          foodSelector = document.querySelector('[data-x="'+ this.x +'"][data-y="'+ this.y +'"]')
-          foodSelector.classList.add('food');
-
-          this.Eat = function () {
-            document.querySelector('[data-x="'+ this.x +'"][data-y="'+ this.y +'"]').classList.remove('food');
-          }
-        }
+           if(SnakePosition[SnakePosition.length - 1].x == activeFood.x && SnakePosition[SnakePosition.length - 1].y == activeFood.y) {
+             activeFood.Eat();
+             activeFood = new food();
+           }
+           else{
+             run();
+           }
+         }
 
 
-      CreateBoard(25,25);
-      CreateSnake();
-      var activeFood = new food()
-      document.addEventListener('keydown', when_button_is_pressed);
-      Interval = setInterval(function(){Move(directionx, directiony)}, 300)
-    </script>
-  </body>
+         const when_button_is_pressed = function(e) {
+           let x = 0;
+           let y = 0;
+
+
+           console.log(e.key);
+           switch(e.key) {
+             case 'ArrowDown':
+               if(directionx != 0 && directiony != -1) {
+                 directionx = 0;
+                 directiony = 1;
+               }
+               break;
+             case 'ArrowUp':
+               if(directionx != 0 && directiony != 1) {
+                 directionx = 0;
+                 directiony = -1;
+               }
+               break;
+             case 'ArrowLeft':
+               if(directionx != 1 && directiony != 0) {
+                 directionx = -1;
+                 directiony = 0;
+               }
+               break;
+             case 'ArrowRight':
+               if(directionx != -1 && directiony != 0) {
+                 directionx = 1;
+                 directiony = 0;
+               }
+               break;
+             }
+           }
+           function getRandomInt(min, max) {
+             min = Math.ceil(min);
+             max = Math.floor(max);
+             return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+           }
+         function food(){
+           this.x = getRandomInt(0, 25);
+           this.y = getRandomInt(0, 25);
+           while (snakex.indexOf(this.x) != -1 && snakey.indexOf(this.y) != -1) {
+             this.x = getRandomInt(0, 25);
+             this.y = getRandomInt(0, 25);
+           }
+           foodSelector = document.querySelector('[data-x="'+ this.x +'"][data-y="'+ this.y +'"]')
+           foodSelector.classList.add('food');
+
+           this.Eat = function () {
+             document.querySelector('[data-x="'+ this.x +'"][data-y="'+ this.y +'"]').classList.remove('food');
+           }
+         }
+
+
+       CreateBoard(25,25);
+       CreateSnake();
+       var activeFood = new food()
+       document.addEventListener('keydown', when_button_is_pressed);
+       Interval = setInterval(function(){Move(directionx, directiony)}, 300)
+     </script>
+   </body>
 </html>
