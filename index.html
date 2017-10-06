@@ -58,6 +58,7 @@
        board.style.top = 0 +'px';
        board.style.left = 0 + 'px';
 
+
        function CreateBoard(x, y) {
          for(var j = 0; j < y; j++) {
            for(var i = 0; i < x; i++) {
@@ -83,12 +84,9 @@
              //snakey.push(y);
              //snakex.push(x);
              var p = new Punkt(x,y);
-             console.log(p.x +' '+ p.y)
+
              SnakePosition.push(p);
-             for( let i = 0; i < SnakePosition.length; i++) {
-               console.log(SnakePosition[i].x);
-               console.log(SnakePosition[SnakePosition.length - 1].x);
-             }
+
 
              x++;
            }
@@ -104,7 +102,13 @@
            let px = SnakePosition[SnakePosition.length - 1].x + dx;
            let py = SnakePosition[SnakePosition.length - 1].y + dy;
            selector = document.querySelector('[data-x="'+ px +'"][data-y="'+ py +'"]');
-          if(selector == null)
+           var p = new Punkt(px ,py);
+
+           function isBigEnough(element) {
+             return element.x == p.x && element.y == p.y;
+           }
+
+          if(selector == null || SnakePosition.find(isBigEnough) != undefined )
           {
             var GameOver =  document.createElement('h1');
             clearInterval(Interval);
@@ -114,11 +118,11 @@
             GameOver.innerHTML = 'Game Over';
 
           }
+          SnakePosition.push(p);
            //snakex.push(x);
            //snakey.push(y);
-           var p = new Punkt(px ,py);
-           SnakePosition.push(p);
-           console.log(p.x +' '+ p.y);
+
+
 
            selector.classList.add('active');
 
@@ -173,7 +177,11 @@
          function food(){
            this.x = getRandomInt(0, 25);
            this.y = getRandomInt(0, 25);
-           while (snakex.indexOf(this.x) != -1 && snakey.indexOf(this.y) != -1) {
+           var p = new Punkt(this.x ,this.y);
+           function isBigEnough(element) {
+             return element.x == p.x && element.y == p.y;
+           }
+           while (SnakePosition.find(isBigEnough) != undefined) {
              this.x = getRandomInt(0, 25);
              this.y = getRandomInt(0, 25);
            }
