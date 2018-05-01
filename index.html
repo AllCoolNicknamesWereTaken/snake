@@ -2,37 +2,9 @@
  <html lang="pl">
    <head>
      <meta charset='utf-8'>
+     <link rel="stylesheet" type="text/css" href="mystyle.css">
      <style>
-       .square{
-         width: 15px;
-         height: 15px;
-         //border: 1px black solid;*/
-         float: left;
-         position: absolute;
 
-       }
-
-       .BoardClass {
-         border: solid black 5px;
-         width: 375px;
-         height: 375px;
-         float: left;
-         position: absolute;
-       }
-
-       .active {
-         background: black;
-       }
-
-       .food {
-         background: red;
-       }
-
-      h1 {
-        position: absolute;
-        font-weight: bold;
-        font: 20pt Arial;
-      }
      </style>
    </head>
    <body>
@@ -42,6 +14,13 @@
        var snakex = []
        var snakey = []
        var SnakePosition = [];
+       var score = 0;
+       var scoreDisplayContainer =  document.createElement('div')
+       body.appendChild(scoreDisplayContainer);
+       var scoreDisplay =  document.createElement('h2');
+       scoreDisplayContainer.appendChild(scoreDisplay);
+       scoreDisplayContainer.className = 'scoreDisplayContainer';
+       scoreDisplay.innerHTML = 'Your Score: '  + score;
 
        function Punkt(x, y)
        {
@@ -55,22 +34,25 @@
        var foodSelector = 0;
        body.appendChild(board);
        board.className = 'BoardClass';
-       board.style.top = 0 +'px';
-       board.style.left = 0 + 'px';
+       //board.style.top = 50 + 'vh';
+       //board.style.left = 50 + 'vw';
 
 
        function CreateBoard(x, y) {
          for(var j = 0; j < y; j++) {
+            var k = 1;
            for(var i = 0; i < x; i++) {
+             var z = 1;
              var square = document.createElement('div');
              square.className = 'square';
-             body.appendChild(square);
-             square.style.left = 4 + (15 * i) + 'px';
-             square.style.top = 4 + (15 * j) + 'px';
+             board.appendChild(square);
+             square.style.order = z*k;
              square.dataset.x = i;
              square.dataset.y = j;
              square.dataset.status = 0;
+             z++
            }
+           k++
          }
        }
 
@@ -114,7 +96,7 @@
             clearInterval(Interval);
             body.appendChild(GameOver);
             GameOver.style.top = 100 +'px';
-            GameOver.style.left = 100 + 'px';
+            GameOver.style.left = 123 + 'px';
             GameOver.innerHTML = 'Game Over';
 
           }
@@ -128,6 +110,9 @@
 
            if(SnakePosition[SnakePosition.length - 1].x == activeFood.x && SnakePosition[SnakePosition.length - 1].y == activeFood.y) {
              activeFood.Eat();
+             score = score + 1;
+            //scoreDisplay.innerHTML = '';
+            scoreDisplay.innerHTML = 'Your Score: '  + score;
              activeFood = new food();
            }
            else{

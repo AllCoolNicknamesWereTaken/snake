@@ -1,0 +1,43 @@
+.square{
+  width: 15px;
+  height: 15px;
+  //border: 1px black solid;*/
+  float: left;
+
+}
+
+.BoardClass {
+  border: solid black 5px;
+  width: 375px;
+  height: 375px;
+  float: left;
+  display: flex;
+  flex-wrap: wrap;
+  order: 1;
+
+}
+
+.active {
+  background: black;
+}
+
+.food {
+  background: red;
+}
+
+h1 {
+ /* position: absolute; */
+ font-weight: bold;
+ order: 2;
+ font: 40pt Arial;
+}
+.scoreDisplayContainer {
+  display: flex;
+    order: 3;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
